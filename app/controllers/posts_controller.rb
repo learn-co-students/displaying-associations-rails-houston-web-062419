@@ -20,11 +20,19 @@ class PostsController < ApplicationController
 	def edit
 		@post = Post.find(params[:id])
 		@categories = Category.all
+		# byebug
 	end
 
 	def update
 		post = Post.find(params[:id])
-		post.update(params.require(:post))
+		post.update(posts_params(:title, :description))
+		# byebug
 		redirect_to post_path(post)
+	end
+
+	private
+
+	def posts_params(*args)
+	  params.require(:post).permit(*args)
 	end
 end
